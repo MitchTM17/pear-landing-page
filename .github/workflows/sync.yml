@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout workflow branch
+      - name: Checkout workflows branch
         uses: actions/checkout@v2
         with:
           ref: workflows
@@ -24,7 +24,7 @@ jobs:
       - name: Add upstream repository
         run: git remote add upstream https://github.com/trypear/pear-landing-page.git
 
-      - name: Fetch upstream and local branches
+      - name: Fetch upstream and main branches
         run: |
           git fetch upstream
           git fetch origin
@@ -36,4 +36,7 @@ jobs:
           git push origin temp_main:main
 
       - name: Clean up
-        run: git checkout workflows
+        run: |
+          git checkout workflows
+          git branch -d temp_main
+          git remote remove upstream
